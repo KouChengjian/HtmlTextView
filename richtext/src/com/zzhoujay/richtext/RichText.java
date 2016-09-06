@@ -161,6 +161,7 @@ public class RichText implements Drawable.Callback, View.OnAttachStateChangeList
         matchImages(text);
 
         Spanned spanned = spannedParser.parse(text, asyncImageGetter);
+        
         SpannableStringBuilder spannableStringBuilder;
         if (spanned instanceof SpannableStringBuilder) {
             spannableStringBuilder = (SpannableStringBuilder) spanned;
@@ -340,7 +341,8 @@ public class RichText implements Drawable.Callback, View.OnAttachStateChangeList
 
         @Override
         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-            Drawable drawable = new BitmapDrawable(textView.getContext().getResources(), resource);
+        	Log.e("onResourceReady","onResourceReady");
+        	Drawable drawable = new BitmapDrawable(textView.getContext().getResources(), resource);
             if (!autoFix && (holder.getWidth() <= 0 || holder.getHeight() <= 0) && mImageFixCallback != null) {
                 holder.setWidth(resource.getWidth());
                 holder.setHeight(resource.getHeight());
@@ -362,6 +364,7 @@ public class RichText implements Drawable.Callback, View.OnAttachStateChangeList
         @Override
         public void onLoadStarted(Drawable placeholder) {
             super.onLoadStarted(placeholder);
+            Log.e("onLoadStarted","onLoadStarted");
             int width;
             int height;
             if (holder != null && holder.getHeight() > 0 && holder.getWidth() > 0) {
@@ -383,6 +386,7 @@ public class RichText implements Drawable.Callback, View.OnAttachStateChangeList
         @Override
         public void onLoadFailed(Exception e, Drawable errorDrawable) {
             super.onLoadFailed(e, errorDrawable);
+            Log.e("onLoadFailed",e.toString());
             int width;
             int height;
             if (holder != null && holder.getHeight() > 0 && holder.getWidth() > 0) {
@@ -396,9 +400,9 @@ public class RichText implements Drawable.Callback, View.OnAttachStateChangeList
                 }
             }
             errorDrawable.setBounds(0, 0, width, height);
-            urlDrawable.setBounds(0, 0, width, height);
-            urlDrawable.setDrawable(errorDrawable);
-            textView.setText(textView.getText());
+//            urlDrawable.setBounds(0, 0, width, height);
+//            urlDrawable.setDrawable(errorDrawable);
+//            textView.setText(textView.getText());
         }
     }
 
@@ -431,11 +435,10 @@ public class RichText implements Drawable.Callback, View.OnAttachStateChangeList
                 target = new ImageTargetBitmap(urlDrawable, holder);
                 load = Glide.with(textView.getContext()).load(source).asBitmap();
             }
-            if(targets.get()==null){
+            if(targets.get() == null){
                 targets= new SoftReference<>(new HashSet<Target>());
             }
             targets.get().add(target);
-//            targets.add(target);
             if (!autoFix && mImageFixCallback != null && holder != null) {
                 if (holder.getWidth() > 0 && holder.getHeight() > 0) {
                     load.override(holder.getWidth(), holder.getHeight());
@@ -454,12 +457,17 @@ public class RichText implements Drawable.Callback, View.OnAttachStateChangeList
                     }
                 }
             }
+            
             textView.post(new Runnable() {
                 @Override
                 public void run() {
+                	//Log.e("Started","start");
                     setPlaceHolder(load);
+                   // Log.e("Started","loading");
                     setErrorImage(load);
+                    //Log.e("Started","error");
                     load.into(target);
+                    //Log.e("Started","end");
                 }
             });
             return urlDrawable;

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -171,7 +172,8 @@ public class HtmlText implements Drawable.Callback , View.OnAttachStateChangeLis
         });
     }
     
-    private void setPlaceHolder(GenericRequestBuilder load) {
+    @SuppressWarnings("rawtypes")
+	private void setPlaceHolder(GenericRequestBuilder load) {
         if (placeHolderRes > 0) {
             load.placeholder(placeHolderRes);
         } else {
@@ -179,7 +181,8 @@ public class HtmlText implements Drawable.Callback , View.OnAttachStateChangeLis
         }
     }
 
-    private void setErrorImage(GenericRequestBuilder load) {
+    @SuppressWarnings("rawtypes")
+	private void setErrorImage(GenericRequestBuilder load) {
         if (errorImageRes > 0) {
             load.error(errorImageRes);
         } else {
@@ -336,7 +339,8 @@ public class HtmlText implements Drawable.Callback , View.OnAttachStateChangeLis
         return null;
     }
     
-    private static boolean isGif(String path) {
+    @SuppressLint("DefaultLocale")
+	private static boolean isGif(String path) {
         int index = path.lastIndexOf('.');
         return index > 0 && "gif".toUpperCase().equals(path.substring(index + 1).toUpperCase());
     }
@@ -346,7 +350,8 @@ public class HtmlText implements Drawable.Callback , View.OnAttachStateChangeLis
     }
     
     private final Html.ImageGetter asyncImageGetter = new Html.ImageGetter() {
-        @Override
+        @SuppressWarnings("rawtypes")
+		@Override
         public Drawable getDrawable(String source) {
             if (noImage) {
                 return new ColorDrawable(Color.TRANSPARENT);
@@ -392,7 +397,8 @@ public class HtmlText implements Drawable.Callback , View.OnAttachStateChangeLis
                 }
             }
             textView.post(new Runnable() {
-                @Override
+                @SuppressWarnings("unchecked")
+				@Override
                 public void run() {
                     setPlaceHolder(load);
                     setErrorImage(load);

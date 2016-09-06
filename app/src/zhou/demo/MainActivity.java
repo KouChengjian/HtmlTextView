@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     
     
     
-    private static final String IMAGE1 = "<h1>RichText</h1><p>Android平台下的富文本解析器</p>" +
+    private static final String IMAGE1 = "<h1>RichText</h1><p>" +
+    		"每天看你们发说说，我都好羡慕 。你们长得又好看 ，还用智能手机，又有钱，整天讨论一些好像很厉害的东西。随便拿个东西都顶我几个月的生活费，我读书少，又是乡下来的，没见过多少世面，所以我只能默默的看着你发，时不时点个赞fffff。<img src=\"http://img.baidu.com/hi/jx2/j_0002.gif\"/></p><p><br/></p><p><br/></p><p><span style=\"text-decoration: line-through; color: rgb(255, 0, 0);\\\"><em><strong>上班路上还打醒精神，如今江湖险恶，到处都是坏人。</p>" +
     		"<img title=\"\" " +
     		"src=\"http://image.tianjimedia.com/uploadImages/2015/129/56/J63MI042Z4P8.jpg\" " +
     		" style=\"cursor: pointer;\">" +
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void imageClicked(List<String> imageUrls, int position) {
                 Toast.makeText(getApplicationContext(), "click:" + imageUrls.get(position), Toast.LENGTH_SHORT).show();
+                
+            
             }
         })
         .placeHolder(R.mipmap.loding) // 设置加载中显示的占位图
